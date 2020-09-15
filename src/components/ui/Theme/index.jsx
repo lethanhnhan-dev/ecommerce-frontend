@@ -17,13 +17,16 @@ export default createMuiTheme({
 		},
 	},
 	typography: {
-        h3:{
+		h4: {
 			fontFamily: "Raleway",
-        },
+		},
+		h5: {
+			fontFamily: "Raleway",
+		},
 		tab: {
 			fontFamily: "Raleway",
 			textTransform: "upercase",
-			fontWeight: "700",
+			fontWeight: "500",
 			fontSize: "1rem",
 		},
 		estimate: {

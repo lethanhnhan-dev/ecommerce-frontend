@@ -1,6 +1,5 @@
 import {
 	AppBar,
-	Button,
 	Tab,
 	Tabs,
 	Toolbar,
@@ -10,7 +9,8 @@ import {
 import { makeStyles } from "@material-ui/styles";
 import PropTypes from "prop-types";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
+import Search from "./Search";
 
 function ElevationScroll(props) {
 	const { children } = props;
@@ -31,7 +31,7 @@ ElevationScroll.propTypes = {
 const useStyles = makeStyles((theme) => ({
 	toolbarMargin: {
 		...theme.mixins.toolbar,
-		marginBottom: "3rem",
+		marginBottom: "2rem",
     },
 	logo: {
 		margin: "1rem 20px",
@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 		...theme.typography.tab,
 		minWidth: "10",
 		marginLeft: "25px",
-		height: "88px",
+		// height: "88px",
     },
 	button: {
 		...theme.typography.estimate,
@@ -54,6 +54,9 @@ const useStyles = makeStyles((theme) => ({
 		marginRight: "25px",
 		height: "45px",
 	},
+	about:{
+		height: "200px"
+	}
 }));
 
 const Header = () => {
@@ -70,13 +73,14 @@ const Header = () => {
 				<AppBar position="fixed">
 					<Toolbar disableGutters>
 						<Typography
-							variant="h3"
+							variant="h5"
 							className={classes.logo}
 							component={Link}
 							to="/"
 						>
 							Phone Store
 						</Typography>
+						<Search />
 						<Tabs
 							value={value}
 							onChange={handleChange}
@@ -128,4 +132,4 @@ const Header = () => {
 	);
 };
 
-export default Header;
+export default withRouter(Header);
