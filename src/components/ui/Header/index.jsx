@@ -8,8 +8,9 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Link, withRouter } from "react-router-dom";
+import { signOut, isAuthenticated } from "../../../api/auth";
 import Search from "./Search";
 
 function ElevationScroll(props) {
@@ -32,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 	toolbarMargin: {
 		...theme.mixins.toolbar,
 		marginBottom: "2rem",
-    },
+	},
 	logo: {
 		margin: "1rem 20px",
 		textDecoration: "none",
@@ -44,9 +45,9 @@ const useStyles = makeStyles((theme) => ({
 	tab: {
 		...theme.typography.tab,
 		minWidth: "10",
-		marginLeft: "25px",
+		marginLeft: "0px",
 		// height: "88px",
-    },
+	},
 	button: {
 		...theme.typography.estimate,
 		borderRadius: "50px",
@@ -54,17 +55,45 @@ const useStyles = makeStyles((theme) => ({
 		marginRight: "25px",
 		height: "45px",
 	},
-	about:{
-		height: "200px"
-	}
+	about: {
+		height: "200px",
+	},
 }));
 
-const Header = () => {
+const Header = ({ history }) => {
 	const classes = useStyles();
 	const [value, setValue] = useState(0);
 
 	const handleChange = (e, value) => {
 		setValue(value);
+	};
+
+	useEffect(() => {
+		console.log(isAuthenticated);
+	}, []);
+
+	const dashboardLink = () => {
+		if (isAuthenticated()) {
+			if (isAuthenticated().user.role === 0) {
+				return (
+					<Tab
+						className={classes.tab}
+						label="Tài khoản"
+						component={Link}
+						to="/user/dashboard"
+					/>
+				);
+			} else if (isAuthenticated().user.role === 1) {
+				return (
+					<Tab
+						className={classes.tab}
+						label="Tài khoản"
+						component={Link}
+						to="/admin/dashboard"
+					/>
+				);
+			}
+		}
 	};
 
 	return (
@@ -93,6 +122,7 @@ const Header = () => {
 								component={Link}
 								to="/"
 							/>
+							{dashboardLink()}
 							<Tab
 								className={classes.tab}
 								label="giới thiệu"
@@ -105,7 +135,37 @@ const Header = () => {
 								component={Link}
 								to="/location"
 							/>
-							<Tab
+							{!isAuthenticated() && (
+								<Fragment>
+									<Tab
+										className={classes.tab}
+										label="Đăng nhập"
+										component={Link}
+										to="/signin"
+									/>
+
+									<Tab
+										className={classes.tab}
+										label="Đăng kí"
+										component={Link}
+										to="/signup"
+									/>
+								</Fragment>
+							)}
+							{isAuthenticated() && (
+								<Tab
+									className={classes.tab}
+									label="Đăng xuất"
+									component={Link}
+									to="/signout"
+									onClick={() =>
+										signOut(() => {
+											history.push("/");
+										})
+									}
+								/>
+							)}
+							{/* <Tab
 								className={classes.tab}
 								label="liên hệ"
 								component={Link}
@@ -122,7 +182,7 @@ const Header = () => {
 								label="giỏ hàng"
 								component={Link}
 								to="/cart"
-							/>
+							/> */}
 						</Tabs>
 					</Toolbar>
 				</AppBar>

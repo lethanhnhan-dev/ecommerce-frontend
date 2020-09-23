@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
+import { signOut } from "../../../api/auth";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -25,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const Footer = () => {
+const Footer = ({ history }) => {
 	const classes = useStyles();
 
 	return (
@@ -36,7 +37,16 @@ const Footer = () => {
 					<div>
 						<Link to="/signin">Sign In</Link>
 						<Link to="/signup">Sign Up</Link>
-						<Link to="/signout">Sign Out</Link>
+						<Link
+							to="/signout"
+							onClick={() =>
+								signOut(() => {
+									history.push("/");
+								})
+							}
+						>
+							Sign Out
+						</Link>
 					</div>
 					<Typography variant="body1">
 						My sticky footer can be found here.

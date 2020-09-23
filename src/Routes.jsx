@@ -4,6 +4,11 @@ import Home from "./components/ui/Home";
 import SignIn from "./components/ui/SignIn";
 import SignUp from "./components/ui/SignUp";
 import SignOut from "./components/ui/SignOut";
+import PrivateRoute from "./api/PrivateRoute";
+import Dashboard from "./components/ui/UserDashboard";
+import AdminRoute from "./api/AdminRoute";
+import AdminDashboard from "./components/ui/AdminDashboard";
+import AddCategory from "./components/admin/AddCategory";
 
 const Routes = () => {
 	return (
@@ -35,6 +40,13 @@ const Routes = () => {
 			<Route exact path="/signout">
 				<SignOut />
 			</Route>
+			<PrivateRoute path="/user/dashboard" exact component={Dashboard} />
+			<AdminRoute
+				path="/admin/dashboard"
+				exact
+				component={AdminDashboard}
+			/>
+			<AdminRoute path="/create/category" exact component={AddCategory} />
 		</Switch>
 	);
 };

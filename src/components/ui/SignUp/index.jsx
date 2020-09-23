@@ -66,8 +66,6 @@ const SignUp = () => {
 		event.preventDefault();
 		setValues({ ...values, error: false });
 		signUp({ name, email, password }).then((data) => {
-			// register({ name, email, password }).then((data) => {
-			// console.log(data);
 			if (data.error) {
 				setValues({
 					...values,
@@ -77,7 +75,15 @@ const SignUp = () => {
 				});
 			} else {
 				console.log("Register sucess!");
-				setValues({ ...values, error: "", success: true, open: true });
+				setValues({
+					...values,
+					name: "",
+					email: "",
+					password: "",
+					error: "",
+					success: true,
+					open: true,
+				});
 			}
 		});
 	};
