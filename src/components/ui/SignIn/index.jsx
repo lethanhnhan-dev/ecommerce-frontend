@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
 		fontSize: "2.5rem",
 		fontWeight: "700",
 		fontFamily: "Raleway",
+		alignItems: "center",
 	},
 }));
 

@@ -4,13 +4,13 @@ import {
 	Tabs,
 	Toolbar,
 	Typography,
-	useScrollTrigger,
+	useScrollTrigger
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import PropTypes from "prop-types";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useState } from "react";
 import { Link, withRouter } from "react-router-dom";
-import { signOut, isAuthenticated } from "../../../api/auth";
+import { isAuthenticated, signOut } from "../../../api/auth";
 import Search from "./Search";
 
 function ElevationScroll(props) {
@@ -67,10 +67,6 @@ const Header = ({ history }) => {
 	const handleChange = (e, value) => {
 		setValue(value);
 	};
-
-	useEffect(() => {
-		console.log(isAuthenticated);
-	}, []);
 
 	const dashboardLink = () => {
 		if (isAuthenticated()) {

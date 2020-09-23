@@ -5,10 +5,21 @@ import SignIn from "./components/ui/SignIn";
 import SignUp from "./components/ui/SignUp";
 import SignOut from "./components/ui/SignOut";
 import PrivateRoute from "./api/PrivateRoute";
-import Dashboard from "./components/ui/UserDashboard";
 import AdminRoute from "./api/AdminRoute";
+import Dashboard from "./components/ui/UserDashboard";
 import AdminDashboard from "./components/ui/AdminDashboard";
 import AddCategory from "./components/admin/AddCategory";
+import AddProduct from "./components/admin/AddProduct";
+
+// // Lazy
+// const Home = React.lazy(() => import("./components/ui/Home"));
+// const SignUp = React.lazy(() => import("./components/ui/SignUp"));
+// const SignIn = React.lazy(() => import("./components/ui/SignIn"));
+// const Dashboard = React.lazy(() => import("./components/ui/UserDashboard"));
+// const AdminDashboard = React.lazy(() =>
+// 	import("./components/ui/AdminDashboard"),
+// );
+// const AddCategory = React.lazy(() => import("./components/admin/AddCategory"));
 
 const Routes = () => {
 	return (
@@ -47,6 +58,7 @@ const Routes = () => {
 				component={AdminDashboard}
 			/>
 			<AdminRoute path="/create/category" exact component={AddCategory} />
+			<AdminRoute path="/create/product" exact component={AddProduct} />
 		</Switch>
 	);
 };
