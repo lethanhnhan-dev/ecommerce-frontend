@@ -1,12 +1,18 @@
 import {
 	Button,
 	Container,
+	FormControl,
 	Grid,
+	InputLabel,
 	makeStyles,
+	MenuItem,
 	Paper,
+	Select,
+	Snackbar,
 	TextField,
 	Typography,
 } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
 import React, { useEffect, useState } from "react";
 import { createProduct, getAllCategories } from "../../../api/apiAdmin";
 import { isAuthenticated } from "../../../api/auth";
@@ -63,7 +69,7 @@ const AddProduct = () => {
 		redirectToReferer: false,
 		formData: "",
 		success: false,
-		open: true,
+		open: false,
 	});
 
 	const {
@@ -90,7 +96,15 @@ const AddProduct = () => {
 	const initData = () => {
 		getAllCategories().then((data) => {
 			if (data.error) {
-				setValues({ ...values, error: data.error });
+				console.log(data.error);
+				if (data.error === "All fields must be required!") {
+					setValues({
+						...values,
+						error: "Kiểm tra lại các trường bị trống!",
+					});
+				} else {
+					setValues({ ...values, error: data.error });
+				}
 			} else {
 				setValues({
 					...values,
@@ -124,23 +138,72 @@ const AddProduct = () => {
 			...values,
 			error: "",
 			loading: true,
+			open: false,
 		});
 		createProduct(user._id, token, formData).then((data) => {
 			if (data.error) {
-				setValues({ ...values, error: data.error });
+				setValues({
+					...values,
+					error: data.error,
+					success: false,
+					open: true,
+				});
 			} else {
 				setValues({
 					...values,
 					name: "",
 					description: "",
 					photo: "",
+					category: "",
+					shipping: "",
 					price: "",
 					quantity: "",
 					loading: false,
 					createdProduct: data.name,
+					success: true,
+					open: true,
+					formData: new FormData(),
 				});
 			}
 		});
+	};
+
+	// Error Handling
+	const showError = (error) => (
+		<Snackbar
+			anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+			open={open}
+			autoHideDuration={5000}
+			onClose={handleClose}
+		>
+			<Alert variant="filled" severity="error">
+				{error}
+			</Alert>
+		</Snackbar>
+	);
+
+	const showSuccess = () => (
+		<Snackbar
+			anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+			open={open}
+			autoHideDuration={5000}
+			onClose={handleClose}
+		>
+			<Alert variant="filled" severity="success">
+				Thêm sản phẩm {name} thành công
+			</Alert>
+		</Snackbar>
+	);
+
+	const handleClose = (event, reason) => {
+		if (reason === "clickaway") {
+			return;
+		}
+		setValues({ ...values, open: false });
+	};
+
+	const showSnackbar = (error) => {
+		return success === true ? showSuccess() : showError(error);
 	};
 
 	return (
@@ -186,6 +249,7 @@ const AddProduct = () => {
 									label="Tên sản phẩm"
 									type="text"
 									variant="outlined"
+									value={name}
 									onChange={handleChange("name")}
 								/>
 								<TextField
@@ -196,57 +260,71 @@ const AddProduct = () => {
 									rows={4}
 									placeholder="Mô tả..."
 									variant="outlined"
+									value={description}
 									onChange={handleChange("description")}
 								/>
 								<TextField
 									className={classes.textField}
 									fullWidth
-									label="Giá"
+									label="Giá (VND)"
 									type="number"
 									variant="outlined"
+									value={price}
 									onChange={handleChange("price")}
 								/>
-								<TextField
+								<FormControl
+									variant="outlined"
 									className={classes.textField}
 									fullWidth
-									label="Danh mục sản phẩm"
-									select
-									variant="outlined"
-									SelectProps={{
-										native: true,
-									}}
-									onChange={handleChange("category")}
 								>
-									<option>Please select</option>
-									{categories &&
-										categories.map((category, index) => (
-											<option
-												value={category._id}
-												key={index}
-											>
-												{category.name}
-											</option>
-										))}
-								</TextField>
-								<TextField
+									<InputLabel id="categories-form-control-label">
+										Danh mục sản phẩm
+									</InputLabel>
+									<Select
+										labelId="categories-form-control-label"
+										id="categories-form-control"
+										value={category}
+										onChange={handleChange("category")}
+										label="Danh mục sản phẩm"
+									>
+										{categories &&
+											categories.map(
+												(category, index) => (
+													<MenuItem
+														value={category._id}
+														key={index}
+													>
+														{category.name}
+													</MenuItem>
+												),
+											)}
+									</Select>
+								</FormControl>
+								<FormControl
+									variant="outlined"
 									className={classes.textField}
 									fullWidth
-									label="Ship"
-									select
-									variant="outlined"
-									SelectProps={{
-										native: true,
-									}}
-									onChange={handleChange("shipping")}
 								>
-									<option value="0">Không</option>
-									<option value="1">Có</option>
-								</TextField>
+									<InputLabel id="shipping-form-control-label">
+										Ship
+									</InputLabel>
+									<Select
+										labelId="shipping-form-control-label"
+										id="shipping-form-control"
+										value={shipping}
+										onChange={handleChange("shipping")}
+										label="Ship"
+									>
+										<MenuItem value={false}>Không</MenuItem>
+										<MenuItem value={true}>Có</MenuItem>
+									</Select>
+								</FormControl>
 								<TextField
 									className={classes.textField}
 									fullWidth
 									label="Số lượng sản phẩm"
 									type="number"
+									value={quantity}
 									variant="outlined"
 									onChange={handleChange("quantity")}
 								/>
@@ -270,6 +348,7 @@ const AddProduct = () => {
 					</Grid>
 					<Grid item xs={2} />
 				</Grid>
+				{showSnackbar(error)}
 			</Container>
 		</div>
 	);
