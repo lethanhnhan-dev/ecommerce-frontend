@@ -129,8 +129,10 @@ const Header = ({ history }) => {
 								className={classes.tab}
 								label="cửa hàng"
 								component={Link}
-								to="/location"
+								to="/shop"
 							/>
+
+							{/* Need return array for there Tabs components */}
 							{!isAuthenticated() && (
 								<Fragment>
 									<Tab
@@ -161,24 +163,6 @@ const Header = ({ history }) => {
 									}
 								/>
 							)}
-							{/* <Tab
-								className={classes.tab}
-								label="liên hệ"
-								component={Link}
-								to="/contact"
-							/>
-							<Tab
-								className={classes.tab}
-								label="tài khoản"
-								component={Link}
-								to="/account"
-							/>
-							<Tab
-								className={classes.tab}
-								label="giỏ hàng"
-								component={Link}
-								to="/cart"
-							/> */}
 						</Tabs>
 					</Toolbar>
 				</AppBar>

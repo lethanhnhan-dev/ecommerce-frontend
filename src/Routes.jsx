@@ -10,6 +10,7 @@ import Dashboard from "./components/ui/UserDashboard";
 import AdminDashboard from "./components/ui/AdminDashboard";
 import AddCategory from "./components/admin/AddCategory";
 import AddProduct from "./components/admin/AddProduct";
+import Shop from "./components/ui/Shop";
 
 // // Lazy
 // const Home = React.lazy(() => import("./components/ui/Home"));
@@ -44,6 +45,9 @@ const Routes = () => {
 			</Route>
 			<Route exact path="/signin">
 				<SignIn />
+			</Route>
+			<Route exact path="/shop">
+				<Shop />
 			</Route>
 			<Route exact path="/signup">
 				<SignUp />

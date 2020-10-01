@@ -8,6 +8,7 @@ export default createMuiTheme({
 		common: {
 			blue: `${arcBlue}`,
 			orange: `${arcOrange}`,
+			black: '#000000'
 		},
 		primary: {
 			main: `${arcBlue}`,

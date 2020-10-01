@@ -57,11 +57,11 @@ const MediaCard = ({ product, url }) => {
 				</CardContent>
 			</CardActionArea>
 			<CardActions>
-				<Button size="small" color="primary">
+				<Button size="medium" color="primary" variant="contained">
 					Xem sản phẩm
 				</Button>
-				<Button size="small" color="primary">
-					Thên vào giỏ hàng
+				<Button size="medium" color="secondary" variant="contained">
+					Chọm mua
 				</Button>
 			</CardActions>
 		</Card>
