@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	media: {
 		height: 350,
+		margin: theme.spacing(3)
 	},
 	description: {
 		lineHeight: "1.5em",
@@ -34,7 +35,7 @@ const MediaCard = ({ product, url }) => {
 	return (
 		<Card className={classes.root}>
 			<CardActionArea>
-				<CardMedia
+				<CardMedia 
 					className={classes.media}
 					image={`${API}/${url}/photo/${product._id}`}
 					title="Contemplative Reptile"

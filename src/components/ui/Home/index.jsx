@@ -1,4 +1,4 @@
-import { Container, Grid, Typography } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { getAllProducts } from "../../../api/commonAPI";
 import MediaCard from "../Product/MediaCard";
@@ -34,29 +34,29 @@ const Home = () => {
 	}, []);
 
 	return (
-		<Container>
-			<Grid container>
-				<Grid item xs={3}></Grid>
-				<Grid item xs>
-					<Typography variant="h3">Bán chạy</Typography>
-					<Grid container>
-						{productsBySell.map((product, index) => (
-							<Grid item xs={4} key={product._id}>
-								<MediaCard product={product} url="product" />
-							</Grid>
-						))}
-					</Grid>
-					<Typography variant="h3">Hàng mới về</Typography>
-					<Grid container>
-						{productsByArrival.map((product, index) => (
-							<Grid item xs={4} key={product._id}>
-								<MediaCard product={product} url="product" />
-							</Grid>
-						))}
-					</Grid>
+		<Grid container>
+			<Grid item xs={3}>
+				Hello
+			</Grid>
+			<Grid item xs>
+				<Typography variant="h3">Bán chạy</Typography>
+				<Grid container>
+					{productsBySell.map((product, index) => (
+						<Grid item xs={3} key={product._id}>
+							<MediaCard product={product} url="product" />
+						</Grid>
+					))}
+				</Grid>
+				<Typography variant="h3">Hàng mới về</Typography>
+				<Grid container>
+					{productsByArrival.map((product, index) => (
+						<Grid item xs={3} key={product._id}>
+							<MediaCard product={product} url="product" />
+						</Grid>
+					))}
 				</Grid>
 			</Grid>
-		</Container>
+		</Grid>
 	);
 };
 

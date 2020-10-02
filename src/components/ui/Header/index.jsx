@@ -4,7 +4,7 @@ import {
 	Tabs,
 	Toolbar,
 	Typography,
-	useScrollTrigger
+	useScrollTrigger,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import PropTypes from "prop-types";
@@ -17,7 +17,7 @@ function ElevationScroll(props) {
 	const { children } = props;
 	const trigger = useScrollTrigger({
 		disableHysteresis: true,
-		threshold: 0,
+		threshold: 300,
 	});
 
 	return React.cloneElement(children, {
@@ -33,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
 	toolbarMargin: {
 		...theme.mixins.toolbar,
 		marginBottom: "2rem",
+		marginTop: "2rem",
 	},
 	logo: {
 		margin: "1rem 20px",

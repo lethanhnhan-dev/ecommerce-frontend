@@ -46,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
 		display: "flex",
 		flexDirection: "column",
 		alignItems: "center",
+		minHeight: '67vh'
 	},
 	heading: {
 		fontSize: "2.5rem",
@@ -85,7 +86,10 @@ const AdminDashboard = () => {
 						<TableBody>
 							<StyledTableRow>
 								<StyledTableCell>
-									<Link component={LinkRouter} to="/create/category">
+									<Link
+										component={LinkRouter}
+										to="/create/category"
+									>
 										Tạo danh mục sản phẩm
 									</Link>
 								</StyledTableCell>
@@ -155,7 +159,6 @@ const AdminDashboard = () => {
 			</div>
 		);
 	};
-
 
 	return (
 		<Container disableGutters>
